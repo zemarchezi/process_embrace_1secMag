@@ -375,4 +375,4 @@ if __name__ == "__main__":
     STATION_COORDINATES = load_station_coordinates(f"{AUX_PATH}/station_coordinates.csv")
     
     # Run the conversion
-    magnetometer_to_iaga(DATA_PATH, AUX_PATH, OUTPUT_PATH, STATION_COORDINATES, 2022, 2025)
+    magnetometer_to_iaga(DATA_PATH, AUX_PATH, OUTPUT_PATH, STATION_COORDINATES, 2024, 2025)
