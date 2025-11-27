@@ -334,7 +334,7 @@ if __name__ == "__main__":
         stations=None,
         
         # Directory where files will be saved
-        output_dir="/Users/jose/mag_data/embrace/second_raw"
+        output_dir="/data/marchezi/mag_data/embrace/second_raw"
     )
     
     # Start the download process with parallel processing settings

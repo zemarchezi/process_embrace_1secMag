@@ -212,7 +212,7 @@ def magnetometer_to_iaga(data_path, aux_path, output_path, station_coordinates, 
     slope_factors["Valid_from"] = pd.to_datetime(slope_factors["Valid_from"])
     
     # Create log file
-    log_file = open("iaga_conversion_log.txt", "w")
+    log_file = open("iaga_conversion_logs.txt", "w")
     
     # Process years
     for year in range(year0, year1):
@@ -360,9 +360,9 @@ def magnetometer_to_iaga(data_path, aux_path, output_path, station_coordinates, 
 
 #%%
 # Define your paths here
-DATA_PATH = "/Users/jose/mag_data/embrace/second_raw"  # Replace with your actual data path
+DATA_PATH = "/data/marchezi/mag_data/embrace/second_raw"  # Replace with your actual data path
 AUX_PATH = "./aux_data"      # Replace with your actual auxiliary data path
-OUTPUT_PATH = "/Users/jose/mag_data/embrace/second" # Replace with your desired output path
+OUTPUT_PATH = "/data/marchezi/mag_data/embrace/second" # Replace with your desired output path
 
 # Run the main function if script is executed directly
 if __name__ == "__main__":
@@ -375,4 +375,4 @@ if __name__ == "__main__":
     STATION_COORDINATES = load_station_coordinates(f"{AUX_PATH}/station_coordinates.csv")
     
     # Run the conversion
-    magnetometer_to_iaga(DATA_PATH, AUX_PATH, OUTPUT_PATH, STATION_COORDINATES, 2024, 2025)
+    magnetometer_to_iaga(DATA_PATH, AUX_PATH, OUTPUT_PATH, STATION_COORDINATES, 2022, 2025)
