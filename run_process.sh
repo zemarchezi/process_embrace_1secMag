@@ -4,9 +4,9 @@ cd /home/marchezi/python_projects/process_embrace_1secMag
 
 conda init
 
-conda activate spaceData
+# conda activate spaceData
 
-python download-embrace-data.py
+# python download-embrace-data.py
 
 conda activate spaceData
 

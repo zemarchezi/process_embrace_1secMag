@@ -11,9 +11,9 @@ from deal_with_zip_files import *
 from tqdm import tqdm
 # %%
 
-DATA_PATH = "/Users/josem/mag_data/embrace/Karen"
-AUX_PATH = "/Users/josem/python_projects/embrace_gic_nn_modeling/auxdata"
-OUTPUT_PATH = "/Users/josem/mag_data/embrace_1sec/processed"
+DATA_PATH = "/data/marchezi/mag_data/embrace/second_raw"  # Replace with your actual data path
+AUX_PATH = "./aux_data"      # Replace with your actual auxiliary data path
+OUTPUT_PATH = "/data/mag_data/embrace/second" # Replace with your desired output path
 #%%
 def createdir(out_subpath):
     if not os.path.exists(out_subpath):
@@ -38,8 +38,8 @@ slope_factors["Valid_from"] = pd.to_datetime(slope_factors["Valid_from"])
 
 # %%
 ff = open("log.txt", "a")
-for year in tqdm(range(2022, 2024)):
-    files = glob.glob(f"{DATA_PATH}/**/**/{year}/")
+for year in tqdm(range(2022, 2024)): 
+    files = glob.glob(f"{DATA_PATH}/{year}/")
     if len(files) > 0:
         stations = []
         for file in sorted(files):

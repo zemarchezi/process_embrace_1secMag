@@ -1,4 +1,4 @@
-#%%
+#%% 131 day
 import os
 import glob
 import re
@@ -198,11 +198,11 @@ def create_iaga_header(station_code, date, station_info=None):
     header += f" # Final data will be available on the online.                            |\n"
     header += f" # Go to http://www.inpe.br/spaceweather for details on obtaining         |\n"
     header += f" # this product.                                                          |\n"
-    header += f"DATE       TIME         DOY     {station_code.upper()}H         {station_code.upper()}D      {station_code.upper()}Z      {station_code.upper()}F     |"
+    header += f"DATE       TIME         DOY     {station_code.upper()}H           {station_code.upper()}D          {station_code.upper()}Z          {station_code.upper()}F     |"
     
     return header
 
-# Main function to convert magnetometer data to IAGA-2002 format
+# Main function to convert magnetometer data to IAGA-2002 format 
 def magnetometer_to_iaga(data_path, aux_path, output_path, station_coordinates, year0, year1):
     # Load scaling and slope factors
     scaling_factors = pd.read_csv(f"{aux_path}/embrace_scaling_factors.csv")
@@ -305,7 +305,10 @@ def magnetometer_to_iaga(data_path, aux_path, output_path, station_coordinates, 
                             "H": H,
                             "D": D,
                             "Z": Z,
-                            "F": F
+                            "F": F,
+                            "H(Ch)": data["columns"]["H(Ch2)"],
+                            "D(Ch)": data["columns"]["D(Ch4)"],
+                            "Z(Ch)": data["columns"]["Z(Ch6)"]
                         })
                         
                         day_data.append(hour_df)
@@ -360,10 +363,10 @@ def magnetometer_to_iaga(data_path, aux_path, output_path, station_coordinates, 
 
 #%%
 # Define your paths here
-DATA_PATH = "/data/marchezi/mag_data/embrace/second_raw"  # Replace with your actual data path
+DATA_PATH = "/data/mag_data/embrace/second_raw"  # Replace with your actual data path
 AUX_PATH = "./aux_data"      # Replace with your actual auxiliary data path
-OUTPUT_PATH = "/data/marchezi/mag_data/embrace/second" # Replace with your desired output path
-
+OUTPUT_PATH = "/data/mag_data/embrace/second" # Replace with your desired output path
+#%%
 # Run the main function if script is executed directly
 if __name__ == "__main__":
     print(f"Starting conversion using:")
@@ -376,3 +379,4 @@ if __name__ == "__main__":
     
     # Run the conversion
     magnetometer_to_iaga(DATA_PATH, AUX_PATH, OUTPUT_PATH, STATION_COORDINATES, 2022, 2025)
+#%%
