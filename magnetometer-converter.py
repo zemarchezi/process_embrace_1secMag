@@ -230,7 +230,7 @@ def magnetometer_to_iaga(data_path, aux_path, output_path, station_coordinates, 
             
         for station_code, station_year_path in station_dirs:
             # Process each day of year
-            for doy in range(1, 366):
+            for doy in range(1, 367):
                 # Find zip files for this day
                 zip_files = glob.glob(f"{station_year_path}/{station_code}{doy:03d}*.zip")
                 
@@ -345,14 +345,14 @@ def magnetometer_to_iaga(data_path, aux_path, output_path, station_coordinates, 
                             timestamp = row['time'].strftime('%Y-%m-%d %H:%M:%S.000')
                             doy_str = row['time'].strftime('%-j')  # Day of year without leading zeros
                             
-                            # Format values with 2 decimal places
-                            h_val = f"{row['H']:.2f}" if not pd.isna(row['H']) else "99999.99"
-                            d_val = f"{row['D']:.2f}" if not pd.isna(row['D']) else "99999.99"
-                            z_val = f"{row['Z']:.2f}" if not pd.isna(row['Z']) else "99999.99"
-                            f_val = f"{row['F']:.2f}" if not pd.isna(row['F']) else "99999.99"
+                            # Format values with 6 decimal places
+                            h_val = f"{row['H']:.6f}" if not pd.isna(row['H']) else "99999.999999"
+                            d_val = f"{row['D']:.6f}" if not pd.isna(row['D']) else "99999.999999"
+                            z_val = f"{row['Z']:.6f}" if not pd.isna(row['Z']) else "99999.999999"
+                            f_val = f"{row['F']:.6f}" if not pd.isna(row['F']) else "99999.999999"
                             
                             # Ensure values are properly aligned (right-justified in their fields)
-                            iaga_file.write(f"{timestamp} {doy_str:<6}{h_val:>10} {d_val:>10} {z_val:>10} {f_val:>10}\n")
+                            iaga_file.write(f"{timestamp} {doy_str:<6}{h_val:>12} {d_val:>14} {z_val:>14} {f_val:>14}\n")
                     
                     print(f"Created IAGA-2002 file: {iaga_file_path}")
                 else:
