@@ -48,12 +48,17 @@ def load_station_coordinates(station_csv_path):
         return {}
 
 # Function to get contents of the zip file
-def get_zip_file_contents(zip_path):
+def get_zip_file_contents(zip_path, year):
     with zipfile.ZipFile(zip_path, 'r') as zip_ref:
         file_list = zip_ref.namelist()
         if not file_list:
             raise ValueError(f"No files found in ZIP: {zip_path}")
-        return file_list[0]  # Return the first filename in the archive
+        else:
+            correct_year_file = [ff for ff in file_list if f'{str(year)[-2:]}S' in ff]
+        if len(correct_year_file) > 0:
+            return correct_year_file[0]
+        else:
+            raise ValueError(f"No file for year {year} found in ZIP: {zip_path}")
 
 # Function to extract and read the file content from a ZIP archive
 def read_text_file_from_zip(zip_path, filename):
@@ -251,7 +256,7 @@ def magnetometer_to_iaga(data_path, aux_path, output_path, station_coordinates, 
                 for zip_file in sorted(zip_files):
                     try:
                         # Get filename inside zip
-                        zip_contents = get_zip_file_contents(zip_file)
+                        zip_contents = get_zip_file_contents(zip_file, year)
                         
                         # Read data from zip file
                         data = read_text_file_from_zip(zip_file, zip_contents)
