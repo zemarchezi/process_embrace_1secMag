@@ -54,7 +54,7 @@ def get_zip_file_contents(zip_path, year):
         if not file_list:
             raise ValueError(f"No files found in ZIP: {zip_path}")
         else:
-            correct_year_file = [ff for ff in file_list if f'{str(year)[-2:]}S' in ff]
+            correct_year_file = [ff for ff in file_list if f'{str(year)[-2:]}S' in ff or f'{str(year)[-2:]}s' in ff]
         if len(correct_year_file) > 0:
             return correct_year_file[0]
         else:
@@ -223,7 +223,7 @@ def magnetometer_to_iaga(data_path, aux_path, output_path, station_coordinates, 
     for year in range(year0, year1):
         # Find all station directories for this year
         station_dirs = []
-        for root, dirs, files in os.walk(data_path):
+        for root, dirs, files in os.walk(f"{data_path}/{year}"):
             for dir_name in dirs:
                 year_path = os.path.join(root, dir_name)
                 if os.path.exists(year_path):
@@ -235,7 +235,8 @@ def magnetometer_to_iaga(data_path, aux_path, output_path, station_coordinates, 
             
         for station_code, station_year_path in station_dirs:
             # Process each day of year
-            for doy in range(1, 367):
+            # for doy in range(1, 367):
+            for doy in range(130, 138):
                 # Find zip files for this day
                 zip_files = glob.glob(f"{station_year_path}/{station_code}{doy:03d}*.zip")
                 
@@ -383,5 +384,13 @@ if __name__ == "__main__":
     STATION_COORDINATES = load_station_coordinates(f"{AUX_PATH}/station_coordinates.csv")
     
     # Run the conversion
-    magnetometer_to_iaga(DATA_PATH, AUX_PATH, OUTPUT_PATH, STATION_COORDINATES, 2022, 2025)
+    magnetometer_to_iaga(DATA_PATH, AUX_PATH, OUTPUT_PATH, STATION_COORDINATES, 2024, 2025)
 #%%
+STATION_COORDINATES = load_station_coordinates(f"{AUX_PATH}/station_coordinates.csv")
+data_path = DATA_PATH
+aux_path = AUX_PATH
+output_path = OUTPUT_PATH
+station_coordinates = STATION_COORDINATES
+year0 = 2022
+year1 = 2025
+# %%

@@ -11,7 +11,7 @@ from deal_with_zip_files import *
 from tqdm import tqdm
 # %%
 
-DATA_PATH = "/data/marchezi/mag_data/embrace/second_raw"  # Replace with your actual data path
+DATA_PATH = "/data/mag_data/embrace/second_raw"  # Replace with your actual data path
 AUX_PATH = "./aux_data"      # Replace with your actual auxiliary data path
 OUTPUT_PATH = "/data/mag_data/embrace/second" # Replace with your desired output path
 #%%
@@ -39,18 +39,18 @@ slope_factors["Valid_from"] = pd.to_datetime(slope_factors["Valid_from"])
 # %%
 ff = open("log.txt", "a")
 for year in tqdm(range(2022, 2024)): 
-    files = glob.glob(f"{DATA_PATH}/{year}/")
+    files = glob.glob(f"{DATA_PATH}/{year}/*")
     if len(files) > 0:
         stations = []
         for file in sorted(files):
-            stations.append([wrd for wrd in file.split("\\") if wrd][-2])
+            stations.append([wrd for wrd in file.split("/") if wrd][-1])
     else:
         stations = []
         print(f"No files found for {year}")
         
     for doy in tqdm(range(1, 366)):
         for station in stations: 
-            inner_files = glob.glob(f"{DATA_PATH}/**/{station.upper()}/{year}/{station.lower()}{doy:03d}*.zip")
+            inner_files = glob.glob(f"{DATA_PATH}/{year}/{station.lower()}/{station.lower()}{doy:03d}*.zip")
             if len(inner_files) > 0:
                 day_files = []
                 for file_h in sorted(inner_files):

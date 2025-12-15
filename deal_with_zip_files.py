@@ -29,7 +29,7 @@ def read_text_file_from_zip(zip_path, file_name):
 
             equip_numb = content_str.split("\r\n")[0].split(" <")[0].split(" ")[-1]
             station_name = " ".join(content_str.split("\r\n")[0].split(" <")[0].split(" ")[:-1])
-            stationcode = file_name[:3]
+            stationcode = file_name[:3].upper()
             day_of_the_year = content_str.split("\r\n")[0].split("<")[-1].split(">")[0]
             columns_header = [word for word in content_str.split("\r\n")[2].split(" ") if word]
 
